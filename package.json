@@ -1,0 +1,22 @@
+{
+  "name": "eyedropper-demos",
+  "version": "1.0.0",
+  "description": "This repository contains a series of simple demo pages made to showcase the new JavaScript [EyeDropper API](https://wicg.github.io/eyedropper-api/).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThomasRettig/eyedropper-demos.git"
+  },
+  "keywords": [
+    "eyedropper-api"
+  ],
+  "author": "Thomas Rettig",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ThomasRettig/eyedropper-demos/issues"
+  },
+  "homepage": "https://github.com/ThomasRettig/eyedropper-demos#readme"
+}
