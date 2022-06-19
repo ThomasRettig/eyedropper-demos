@@ -1,0 +1,63 @@
+html {
+  font-family: system-ui;
+  font-size: 12pt;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+h1 {
+  font-size: 27px;
+  font-weight: 500;
+  text-align: center;
+  margin: 10px 0 10px 0;
+}
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+.photos {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-evenly;
+}
+
+.photos img {
+  height: 20vh;
+}
+
+.canvas canvas {
+  position: absolute;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+  height: 50%;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-evenly;
+}

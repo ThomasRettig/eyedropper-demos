@@ -9,7 +9,8 @@ h1 {
 	font-weight: 300;
 }
 
-h1, p {
+h1,
+p {
 	margin: 0;
 	margin-bottom: 5vmin;
 	text-align: center;
@@ -79,8 +80,9 @@ li > a > img {
 
 	li {
 		aspect-ratio: 1;
-		background-color: hsl(0, 0%, 95%);
+		background-color: white;
 		border: 1.5px solid hsl(0, 0%, 85%);
+		box-shadow: 0 0 20px 0px #eee;
 		cursor: pointer;
 		display: flex;
 		justify-content: center;
@@ -88,11 +90,12 @@ li > a > img {
 	    width: 13vw;
 	    padding: 2.2vw;
 	    will-change: transform;
-	    transition: 0.1s transform ease;
+	    transition: 0.1s ease;
 	}
 
 	li:hover {
 		transform: scale(1.04);
+		box-shadow: 0 0 20px 0px #ddd;
 	}
 
 	li > a > img {
