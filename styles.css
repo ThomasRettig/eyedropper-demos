@@ -1,0 +1,101 @@
+html,
+body {
+	font-family: system-ui;
+	margin: 0;
+}
+
+h1 {
+	font-size: clamp(28px, 10vw, 50px);
+	font-weight: 300;
+}
+
+h1, p {
+	margin: 0;
+	margin-bottom: 5vmin;
+	text-align: center;
+}
+
+p {
+	font-size: 20px;
+
+}
+
+img {
+	max-width: 100%;
+}
+
+ul {
+	padding: 0;
+	margin: 0;
+}
+
+li {
+	list-style-type: none;
+	text-align: center;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+li > a {
+	display: grid;
+	font-size: clamp(25px, 10vw, 30px);
+	font-weight: 500;
+	letter-spacing: -0.25px;
+	line-height: 1.15;
+	place-items: center;
+	row-gap: 3vmin;
+}
+
+li > a > img {
+	width: 55%;
+}
+
+@media screen and (max-width: 899px) {
+	header {
+		margin-top: 3vh;
+	}
+
+	li {
+		margin: 6vh 0;
+	}
+}
+
+@media screen and (min-width: 900px) {
+	html, body {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+	}
+
+	ul {
+		display: flex;
+		gap: 4vw;
+	}
+
+	li {
+		aspect-ratio: 1;
+		background-color: hsl(0, 0%, 95%);
+		border: 1.5px solid hsl(0, 0%, 85%);
+		cursor: pointer;
+		display: flex;
+		justify-content: center;
+	    flex-direction: column;
+	    width: 13vw;
+	    padding: 2.2vw;
+	    will-change: transform;
+	    transition: 0.1s transform ease;
+	}
+
+	li:hover {
+		transform: scale(1.04);
+	}
+
+	li > a > img {
+		width: 100px;
+	}
+}
