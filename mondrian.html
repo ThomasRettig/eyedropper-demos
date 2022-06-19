@@ -1,137 +1,175 @@
 <!DOCTYPE html>
-<style>
-  html,
-  body {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-    background: #666;
-  }
-  
-  body {
-    display: grid;
-    place-content: center;
-    grid-template-rows: 75vmin 10vmin;
-    grid-template-columns: 75vmin;
-    gap: 5vmin;
-    padding: 5vmin;
-    height: calc(100% - 10vmin);
-  }
-  
-  .canvas {
-    display: grid;
-    gap: 1vmin;
-    padding: 1vmin;
-    background: black;
-    grid-auto-flow: dense;
-  }
-  
-  .tile:hover,
-  .random:hover {
-    cursor: pointer;
-    box-shadow: inset 0 0 0 1vmin white;
-  }
-  
-  .random {
-    background: black;
-    color: white;
-    font-weight: bold;
-    text-transform: uppercase;
-    border: 0;
-  }
-</style>
+<html lang="en">
+  <head>
+    <title>Mondrian</title>
+    <style>
+      html,
+      body {
+        font-family: system-ui;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: #444;
+      }
+      
+      main {
+        --button-height: 10vmin;
+        display: grid;
+        place-content: center;
+        grid-template-rows: 70vmin var(--button-height);
+        grid-template-columns: 70vmin;
+        gap: 1em;
+      }
 
-<div class="canvas"></div>
-<button class="random">Randomize</button>
+      @media screen and (max-width: 1000px) {
+        main {
+          --button-height: 15vmin;
+        }
+      }
 
-<script>
-  if (!('EyeDropper' in window)) {
-    alert('Your browser does not support the EyeDropper API yet. This demo will not work as intended');
-  }
+      h1 {
+        color: white;
+        font-size: 27px;
+        font-weight: 500;
+        text-align: center;
+        margin: 10px 0 10px 0;
+      }
+      
+      .canvas {
+        display: grid;
+        gap: 1vmin;
+        padding: 1vmin;
+        background: black;
+        grid-auto-flow: dense;
+      }
+      
+      .tile:hover {
+        cursor: pointer;
+        box-shadow: inset 0 0 0 1vmin white;
+      }
+      
+      .random {
+        background: #131313;
+        border: 0;
+        color: #eee;
+        font-family: inherit;
+        font-weight: 500;
+        font-size: 20px;
+        font-variant: all-small-caps;
+        letter-spacing: 1px;
+        line-height: 0;
+        padding: 0;
+      }
 
-  const ART_SIZE = 10;
-  const MAX_TILES = 15;
-  const MIN_DIM = 1;
-  const MAX_DIM = 4;
-  const COLORS = ['#f8da3f', '#e83d2e', '#d9ddde', '#1e4371'];
+      .random:hover {
+        background-color: #222;
+        color: white;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Mondrian</h1>
+    </header>
+    <main>
+      <div class="canvas"></div>
+      <button class="random" aria-label="Randomize Mondrian tiles">Randomize</button>
+    </main>
 
-  const canvas = document.querySelector('.canvas');
-  const randomBtn = document.querySelector('.random');
+    <script>
+      if (!('EyeDropper' in window)) {
+        alert('Your browser does not support the EyeDropper API yet. This demo will not work as intended');
+      }
 
-  canvas.style.gridTemplateRows = `repeat(${ART_SIZE}, 1fr)`;
-  canvas.style.gridTemplateColumns = `repeat(${ART_SIZE}, 1fr)`;
+      const ART_SIZE = 10;
+      const MAX_TILES = 15;
+      const MIN_DIM = 1;
+      const MAX_DIM = 4;
+      const COLORS = ['#f8da3f', '#e83d2e', '#d9ddde', '#1e4371'];
 
-  function getRandomColor() {
-    return COLORS[Math.floor(Math.random() * COLORS.length)];
-  }
+      const canvas = document.querySelector('.canvas');
+      const randomBtn = document.querySelector('.random');
 
-  function getRandomDim(max) {
-    return MIN_DIM + Math.floor(Math.random() * max);
-  }
+      canvas.style.gridTemplateRows = `repeat(${ART_SIZE}, 1fr)`;
+      canvas.style.gridTemplateColumns = `repeat(${ART_SIZE}, 1fr)`;
 
-  function getRandomStartPos() {
-    return Math.ceil(Math.random() * (MAX_TILES / 2))
-  }
+      function getRandomColor() {
+        return COLORS[Math.floor(Math.random() * COLORS.length)];
+      }
 
-  function generateTiles() {
-    canvas.innerHTML = '';
+      function getRandomDim(max) {
+        return MIN_DIM + Math.floor(Math.random() * max);
+      }
 
-    for (let i = 0; i < MAX_TILES; i++) {
-      const tile = document.createElement('div');
-      tile.classList.add('tile');
+      function getRandomStartPos() {
+        return Math.ceil(Math.random() * (MAX_TILES / 2))
+      }
 
-      tile.style.gridRow = `span ${getRandomDim(MAX_DIM)}`;
-      tile.style.gridColumn = `span ${getRandomDim(MAX_DIM)}`;
+      function generateTiles() {
+        canvas.innerHTML = '';
 
-      const color = getRandomColor();
-      tile.style.backgroundColor = color;
-      tile.dataset.color = color;
+        for (let i = 0; i < MAX_TILES; i++) {
+          const tile = document.createElement('div');
+          tile.classList.add('tile');
 
-      tile.title = 'Click to assign a new color';
+          tile.style.gridRow = `span ${getRandomDim(MAX_DIM)}`;
+          tile.style.gridColumn = `span ${getRandomDim(MAX_DIM)}`;
 
-      canvas.appendChild(tile);
-    }
-  }
+          const color = getRandomColor();
+          tile.style.backgroundColor = color;
+          tile.dataset.color = color;
 
-  async function startEyeDropper() {
-    const eyeDropper = new EyeDropper();
-    try {
-      const result = await eyeDropper.open();
-      return result.sRGBHex;
-    } catch (e) {
-      return null;
-    }
-  }
+          tile.title = 'Click to assign a new color';
 
-  async function changeTilesColor(tiles) {
-    const color = await startEyeDropper();
-    if (!color || !tiles.length) {
-      return;
-    }
+          canvas.appendChild(tile);
+        }
+      }
 
-    const oldColor = tiles[0].dataset.color;
+      async function startEyeDropper() {
+        const eyeDropper = new EyeDropper();
+        try {
+          const result = await eyeDropper.open();
+          return result.sRGBHex;
+        } catch (e) {
+          return null;
+        }
+      }
 
-    for (const tile of tiles) {
-      tile.style.backgroundColor = color;
-      tile.dataset.color = color;
-    }
+      async function changeTilesColor(tiles) {
+        const color = await startEyeDropper();
+        if (!color || !tiles.length) {
+          return;
+        }
 
-    COLORS[COLORS.findIndex(c => c === oldColor)] = color;
-  }
+        const oldColor = tiles[0].dataset.color;
 
-  addEventListener('click', e => {
-    const tile = e.target.closest('.tile');
-    if (!tile) {
-      return;
-    }
+        for (const tile of tiles) {
+          tile.style.backgroundColor = color;
+          tile.dataset.color = color;
+        }
 
-    const color = tile.style.backgroundColor;
-    const sameColorTiles = [...canvas.children].filter(tile => tile.style.backgroundColor === color);
+        COLORS[COLORS.findIndex(c => c === oldColor)] = color;
+      }
 
-    changeTilesColor(sameColorTiles);
-  });
+      addEventListener('click', e => {
+        const tile = e.target.closest('.tile');
+        if (!tile) {
+          return;
+        }
 
-  randomBtn.addEventListener('click', generateTiles);
+        const color = tile.style.backgroundColor;
+        const sameColorTiles = [...canvas.children].filter(tile => tile.style.backgroundColor === color);
 
-  generateTiles();
-</script>
+        changeTilesColor(sameColorTiles);
+      });
+
+      randomBtn.addEventListener('click', generateTiles);
+
+      generateTiles();
+    </script>
+  </body>
+</html>
